@@ -45,13 +45,13 @@ module Rpush
               json['mdm'] = data[MDM_KEY]
             else
               json['aps'] = ActiveSupport::OrderedHash.new
-              json['aps']['alert'] = alert if alert
-              json['aps']['badge'] = badge if badge
-              json['aps']['sound'] = sound if sound
-              json['aps']['category'] = category if category
-              json['aps']['url-args'] = url_args if url_args
-
-              if data && data[CONTENT_AVAILABLE_KEY]
+              if !(data && data[CONTENT_AVAILABLE_KEY])
+                json['aps']['alert'] = alert if alert
+                json['aps']['badge'] = badge if badge
+                json['aps']['sound'] = sound if sound
+                json['aps']['category'] = category if category
+                json['aps']['url-args'] = url_args if url_args
+              else
                 json['aps']['content-available'] = 1
               end
 
